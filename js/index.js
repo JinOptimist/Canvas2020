@@ -7,9 +7,7 @@ $(document).ready(function (){
 	
 	var xPosition = 0;
 	for(var i = 0; i < 10; i++){
-		
 		var size = randomInteger(10, 100);
-		
 		ctx.rect(xPosition, 10, size, size);
 		xPosition += size + 10;
 	}
