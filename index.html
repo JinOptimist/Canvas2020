@@ -2,10 +2,12 @@
 	<head>
 		<script src='js/jquery-3.5.0.min.js'></script>
 		<!-- <script src='js/index.js'></script> -->
-		<!-- <script src='js/native.js'></script> -->
+		<script src='js/native.js'></script>
 		
-		<script src='js/tip1.js'></script>
-		<script src='js/tip2.js'></script>
+		<!-- <script src='js/tip1.js'></script> -->
+		<!-- <script src='js/tip2.js'></script> -->
+		<!-- <script src='js/tip3.js'></script> -->
+		<script src='js/Labyrinth.js'></script>
 		<script src='js/Lessone1.js'></script>
 	</head>
 	<body>
@@ -23,7 +25,14 @@
 		</div>
 		
 		<div>
-			<input type='button' id='down' value='Вниз' />
+			<input type='button' value='Вверх' class='doStep' id='up' data-direction='0' />
+		</div>
+		<div>
+			<input type='button' value='Влево' class='doStep' data-direction='3' />
+			<input type='button' value='Вправо' class='doStep' data-direction='1' />
+		</div>
+		<div>
+			<input type='button' value='Вниз' class='doStep' data-direction='2' />
 		</div>
 	
 		<canvas id="blockForDraw"></canvas>

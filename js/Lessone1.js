@@ -5,21 +5,22 @@ $(document).ready(function(){
 	
 	init();
 	
-	$('#down').click(function (){
-		var rows = generateLab();
-		rows[0][0] = 'green';
-		rows[1][0] = 'red';
-		
+	$('.doStep').click(function (){
+		var dir = $(this).data('direction') - 0;
+		Labyrinth.heroStep(dir);
+		var rows = Labyrinth.getRows();
 		drawLab(rows);
 	});
 	
 	function init(){
 		var canvas = document.getElementById('blockForDraw');
-		canvas.width = 1000;
-		canvas.height = 1000;
+		canvas.width = 3000;
+		canvas.height = 3000;
 		ctx = canvas.getContext("2d");
 
-		var rows = generateLab();
+		Labyrinth.setSize(4, 6);
+		Labyrinth.generate();
+		var rows = Labyrinth.getRows();
 
 		drawLab(rows);
 	}
@@ -35,23 +36,20 @@ $(document).ready(function(){
 				var x = j * (size + margin);
 				var y = i * (size + margin);
 				
-				var old = ctx.fillStyle;
-				ctx.fillStyle = cell;
-				ctx.fillRect(x, y, size, size);
-				ctx.fillStyle = old;
+				if (typeof(cell) == "function"){
+					var helf = size / 2;
+					cell(ctx, x + helf, y + helf, helf);
+				}else{
+					var old = ctx.fillStyle;
+					ctx.fillStyle = cell;
+					ctx.fillRect(x, y, size, size);
+					ctx.fillStyle = old;
+				}
+				
 				
 				ctx.fill();
 			}
 		}
-	}
-
-	//Скоро уедете в отдельный файл
-	function generateLab(){
-		return [
-			["red",'#000',"green"],	//Первая строчка(линия)
-			["green","green","green"],	//Вторая строчка(линия)
-			["green",'#000',"green"],	//Третья строчка(линия)
-		];
 	}
 });
 
