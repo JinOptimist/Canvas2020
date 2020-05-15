@@ -29,12 +29,40 @@ function SayHi(parmName){
 	console.log('How do you do?');
 }
 
+function GetFullName(name, secondName){
+	if (!secondName){
+		return "Cool bro " + name;
+	}
+	//return "Mr. " + name + " " + secondName;;
+	return `Mr. ${name} ${secondName}`;
+}
+
+function returnVsContnue(){
+	var counter = 0;
+	while(true){
+		counter++;
+		if (counter % 2 == 0){
+			continue;
+		}
+		
+		console.log(counter);
+		if (counter > 10){
+			return counter;
+		}
+	}
+}
+
+var a = returnVsContnue();
 
 var name = "Ivan";
 //Вызов
 SayHi(name);
 //Вызов
 SayHi("Ia");
+
+var fullNameIvanov = GetFullName('Ivan', 'Ivanon');
+var fullNameMar = GetFullName('Mar', 'Petrova');
+var fullNameRap = GetFullName('Jd');
 
 
 

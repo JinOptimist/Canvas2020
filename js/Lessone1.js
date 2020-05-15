@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	var ctx;
-	var size = 50;
+	var size = 150;
 	var margin = 2;
 	
 	init();
@@ -46,9 +46,6 @@ $(document).ready(function(){
 					ctx.fillRect(x, y, size, size);
 					ctx.fillStyle = old;
 				}
-				
-				
-				
 			}
 		}
 	}

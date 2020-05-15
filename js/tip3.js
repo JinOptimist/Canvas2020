@@ -73,6 +73,22 @@ if (direction == 0){
 	heroXPossible++;
 }
 
+function compareInt(a, b){
+	return a > b;
+}
+
+function mySort(array, sortFunc){
+	for(var i = 0; i < array.length - 1; i++){
+		if (sortFunc(array[i], array[i+1])){
+			var temo = array[i];
+			array[i] = array[i+1];
+			array[i+1] = temo;
+		}
+	}
+}
+
+mySort([1,6,2,8,10], compareInt);
+mySort([1,6,2,8,10], (a,b) => a > b);
 
 
 
