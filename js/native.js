@@ -4,9 +4,9 @@ $(document).ready(function (){
 	canvas.height = 1000;
 	var ctx = canvas.getContext("2d");
 	
-	randoRect(ctx);
-	smile(ctx, 300, 200, 50);
-	smile(ctx, 100, 200, 50);
+	// randoRect(ctx);
+	// smile(ctx, 300, 200, 50);
+	// smile(ctx, 100, 200, 50);
 });
 
 function smile(ctx, x, y, r){
@@ -27,6 +27,7 @@ function smile(ctx, x, y, r){
 	ctx.beginPath();
 	ctx.arc(eye2X, eyeY, eyeR, 0, Math.PI * 2);
 	ctx.stroke();
+	ctx.closePath();
 }
 
 function randoRect(context){

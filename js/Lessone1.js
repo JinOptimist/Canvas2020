@@ -26,6 +26,7 @@ $(document).ready(function(){
 	}
 	
 	function drawLab(rows){
+		ctx.clearRect(0, 0, 3000, 3000);
 		for (var i = 0; i < rows.length; i++){
 			//i хранит в себе номер колонки
 			var line = rows[i];//["green","green","green"]
@@ -47,7 +48,7 @@ $(document).ready(function(){
 				}
 				
 				
-				ctx.fill();
+				
 			}
 		}
 	}

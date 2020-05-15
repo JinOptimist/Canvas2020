@@ -15,9 +15,9 @@ var Labyrinth = (function (){
 	
 	function generateDefault(){
 		rows = [
-			[gamer, wall, ground],	//Первая строчка(линия)
+			[gamer, wall, ground],		//Первая строчка(линия)
 			[ground, ground, ground],	//Вторая строчка(линия)
-			[ground, wall, ground],	//Третья строчка(линия)
+			[ground, wall, ground],		//Третья строчка(линия)
 		];
 	}
 	
