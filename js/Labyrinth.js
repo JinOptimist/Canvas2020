@@ -39,6 +39,81 @@ var Labyrinth = (function (){
 		}
 	}
 	
+	function generateHard(){
+		rows = [];
+		for(var y = 0; y < height; y++){
+			var line = [];
+			for(var x = 0; x < width; x++){
+				line.push(wall);
+			}
+			rows.push(line);
+		}
+		
+		rows[heroY][heroX] = ground;
+		var wallToBreak = [];
+		
+		do{
+			addNearCell(wallToBreak, heroX, heroY);
+			wallToBreak = filterGoodWall(wallToBreak);
+			
+			var coor = getRandomElem(wallToBreak);
+			rows[coor.y][coor.x] = ground;
+			heroX = coor.x;
+			heroY = coor.y;
+		}while(filterGoodWall(wallToBreak).length > 0);
+	}
+	
+	function getRandomElem(items){
+		return items[Math.floor(Math.random() * items.length)];
+	}
+	
+	function addNearCell(wallToBreak, x, y){
+		if (x > 0){
+			wallToBreak.push({
+				x: x - 1,
+				y: y
+				});
+		}
+		if (x < width - 1){
+			wallToBreak.push({
+				x: x + 1,
+				y: y
+				});
+		}
+		if (y > 0){
+			wallToBreak.push({
+				x: x,
+				y: y - 1
+				});
+		}
+		if (y < height - 1){
+			wallToBreak.push({
+				x: x,
+				y: y + 1
+				});
+		}
+	}
+	
+	function filterOnleWall(wallToBreak){
+		//return wallToBreak.filter(coor => rows[coor.y][coor.x] == wall);
+		return wallToBreak.filter(function (elem){
+			return rows[elem.y][elem.x] == wall;
+		});
+	}
+	
+	function filterGoodWall(wallToBreak){
+		//return wallToBreak.filter(coor => rows[coor.y][coor.x] == wall);
+		return wallToBreak.filter(function (elem){
+			var near = [];
+			addNearCell(near, elem.x, elem.y);
+			var start = near.length;
+			var end = filterOnleWall(near).length;
+			
+			return rows[elem.y][elem.x] == wall
+				&& start - end < 2;
+		});
+	}
+	
 	function getRows(){
 		var copyRows = [];
 		for (var y = 0; y < height; y++){
@@ -94,7 +169,7 @@ var Labyrinth = (function (){
 		getWidth: function (){ return width; },
 		getHeight: function (){ return height; },
 		generateDefault: generateDefault,
-		generate: generate,
+		generate: generateHard,
 		getRows: getRows,
 		setSize: setSize,
 		heroStep: heroStep,

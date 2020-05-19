@@ -1,15 +1,40 @@
 $(document).ready(function(){
 	var ctx;
-	var size = 150;
+	var size = 70;
 	var margin = 2;
 	
 	init();
 	
 	$('.doStep').click(function (){
 		var dir = $(this).data('direction') - 0;
+		stepToDir(dir);
+	});
+	
+	function stepToDir(dir){
 		Labyrinth.heroStep(dir);
 		var rows = Labyrinth.getRows();
 		drawLab(rows);
+	}
+	
+	$(document).keydown(function(e) {
+		//left
+		if (e.keyCode == 37) {
+			stepToDir(3);
+		}
+		//up
+		if (e.keyCode == 38) {
+			stepToDir(0);
+		}
+		//right
+		if (e.keyCode == 39) {
+			stepToDir(1);
+		}
+		//down
+		if (e.keyCode == 40) {
+			stepToDir(2);
+		}
+		
+		e.preventDefault();
 	});
 	
 	function init(){
@@ -18,7 +43,7 @@ $(document).ready(function(){
 		canvas.height = 3000;
 		ctx = canvas.getContext("2d");
 
-		Labyrinth.setSize(4, 6);
+		Labyrinth.setSize(10, 20);
 		Labyrinth.generate();
 		var rows = Labyrinth.getRows();
 

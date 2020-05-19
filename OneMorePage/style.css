@@ -1,0 +1,271 @@
+.header{
+	height: 100px;
+	background: #ccc;
+	font-size: 30px;
+	display: flex;
+	align-items : center;
+	justify-content: center;
+}
+
+.center-block{
+	display: flex;
+	background:green;
+}
+.left{
+	background: pink;
+	width: 150px;
+}
+
+.fixed-left{
+	position: fixed;
+    width: 150px;
+
+}
+
+.gallery{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.content{
+	flex: 1;
+	min-height: calc(100vh - 200px);
+}
+.adv{
+	background: red;
+	width: 100px;
+}
+
+.girl{
+	border: 1px red solid;
+	width: 200px;
+	height: 200px;
+	padding: 10px;
+	margin: 5px;
+}
+.girl .header{
+	display: flex;
+	justify-content: center;
+	font-size: 20px;
+	height: 20px;
+	cursor: pointer;
+}
+
+.girl .image{
+	display: flex;
+	align-items : center;
+	justify-content: center;
+	height: 150px;
+}
+
+.girl .image img{
+	max-width: 200px;
+	max-height: 150px;
+	border-radius: 20px;
+}
+
+.girl .button{
+	display: flex;
+	justify-content: space-around;
+}
+
+.left a{
+	margin-top:5px;
+	display: block;
+}
+
+.left .button{
+	background: red;
+	border-radius: 10px;
+	padding-left: 10px;
+}
+
+.left .button.active{
+	background: blue;
+}
+
+.left .button:hover{
+	background: yellow;
+}
+
+/* Apply for 3 elements */
+.left ul{
+	list-style-type: none;
+	padding: 0;
+	margin-left: 0;
+}
+
+/* Apply for 2 elements */
+.left ul ul{
+	margin-left: 20px;
+}
+/* Apply for 2 elements */
+.left li ul{
+	display: none;
+}
+
+.left li:hover > ul{
+	display: block;
+}
+
+.icon{
+	width: 20px;
+	height: 20px;
+	background: white;
+	background-size: cover; 
+}
+
+.icon.like{
+	background-image: url(img/like.png);
+}
+.icon.like:hover{
+	background-image: url(img/like-hover.jpg);
+}
+
+table{
+	background: #FFAA33;
+	width: 100%;
+}
+
+td{
+	border: 1px red solid;
+}
+
+tr:nth-child(2n + 3) td{
+	background: #CCC;
+}
+
+tr:nth-child(2n + 4) td{
+	background: #0CC;
+}
+
+
+tr:last-child td{
+	border-top: 3px black solid;
+	font-weight: bold;
+}
+
+.footer{
+	font-size: 50px;
+}
+
+.popup{
+    position: fixed;
+	height: 100vh;
+	width: 100%;
+	left: 0;
+    top: 0;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup .cover{
+	position: fixed;
+	top: 0;
+	left: 0;
+	
+	opacity: 0.5;
+	
+	height: 100vh;
+	width: 100%;
+	
+	background: #000;
+}
+
+.popup .popup-content{
+	/* background: #fff; */
+	z-index: 500;
+	width: 700px;
+	height: 600px;
+	display: inline;
+}
+
+.girl.big-image{
+	position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.girl.big-image .image{
+	background: gray;
+	width: 100%;
+    height: calc(100vh - 20px);
+}
+
+.girl.big-image .image img{
+	max-width: 100%;
+    max-height: calc(100vh - 60px);
+}
+
+
+.close{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.close img{
+	max-height: 100%;
+	max-width: 100%;
+	border-radius: 50px;
+	border: 10px white solid;
+}
+
+.line{
+	display: flex;
+}
+
+.title{
+	width: 200px;
+	text-align: right;
+	padding-right: 10px;
+}
+
+.data select,
+.data input{
+	width: 150px;
+}
+
+.data input[type=radio]{
+	width: 20px;
+}
+
+.page-content{
+	display: none;
+}
+
+.page-content:target{
+	display: block;
+}
+
+.page-content:last-child{
+	display: block;
+}
+
+.page-content:target ~ .page-content {
+	display:none;
+}
+
+.template{
+	display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+

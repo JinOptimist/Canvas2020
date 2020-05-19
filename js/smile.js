@@ -34,7 +34,7 @@ function smile(ctx, x, y, rFull){
 	}
 	
 	var counter = 0;
-	var step = 100;
+	var step = 200;
 	var dirToSmall = true;
 	
 	clearInterval(numberOfTask);
@@ -48,9 +48,9 @@ function smile(ctx, x, y, rFull){
 			dirToSmall = !dirToSmall;
 		}
 		
-		var scale = (counter % step + step) / (step*2)  ;//[0.5, 1.0]
+		var scale = (counter % step + step) / (step * 2)  ;//[0.5, 1.0]
 		draw(rFull * scale);
-	}, 1000);
+	}, 10);
 }
 
 function randoRect(context){
