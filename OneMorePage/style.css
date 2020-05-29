@@ -258,7 +258,13 @@ tr:last-child td{
 	display: none;
 }
 
+.profile-flex{
+	display: flex;
+}
 
+.preview{
+	border: 1px #000 solid;
+}
 
 
 
