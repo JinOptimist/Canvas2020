@@ -1,4 +1,20 @@
 $(document).ready(function (){
+	init();
+	
+	function init(){
+		// sliderModule.start('.slider-my-cool', [
+			// 'img/girl6.jpg',
+			// 'img/girl7.jpg',
+			// 'img/girl8.png'
+		// ]);
+		
+		sliderModule.start('.slider-my-bad',[
+			'img/girl5.jpg',
+			'img/girl2.jpg',
+			'img/girl3.jpg',
+			'img/girl4.jpg'
+		]);
+	}
 	
 	$('.popup').hide();
 	
