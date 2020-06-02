@@ -1,4 +1,5 @@
 $(document).ready(function (){
+	
 	$('.popup').hide();
 	
 	$('.showPreview').click(function (){

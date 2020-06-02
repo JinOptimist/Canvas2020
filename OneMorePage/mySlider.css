@@ -1,0 +1,27 @@
+#slider img{
+	max-width: 200px;
+	max-height: 200px;
+}
+
+.my-slider{
+	display: flex;
+}
+
+.my-slider .button{
+	display: flex;
+	align-items: center;
+}
+
+.my-slider .button .left,
+.my-slider .button .right{
+	display: flex;
+	align-items: center;
+	background: #13abc1;
+	width: 80px;
+}
+
+.my-slider .counter{
+	position: absolute;
+	background: white;
+    color: black;
+}

@@ -2,9 +2,11 @@
 	<head>
 		<link rel="stylesheet" href="style.css">
 		<link rel="stylesheet" href="slider.css">
+		<link rel="stylesheet" href="mySlider.css">
 		<script src="js/jquery-3.5.0.min.js"></script>
 		<script src="js/slider.js"></script>
 		<script src="js/index.js"></script>
+		<script src="js/mySlider.js"></script>
 	</head>
 	<body>
 		<div class='header'>
@@ -12,7 +14,6 @@
 		</div>
 		<div class="center-block">
 			<div class='left'>
-				
 				<div class='fixed-left'>
 					<ul>
 						<li>
@@ -21,6 +22,10 @@
 						<li>
 							<a href="#gallery"><div class='button'>gallery</div></a>
 						</li>
+						<li>
+							<a href="#slider"><div class='button'>slider</div></a>
+						</li>
+						
 						<li>
 							<a href="#table"><div class='button'>table</div></a>
 						</li>						
@@ -55,7 +60,6 @@
 						</li>
 					</ul>
 				</div>
-				
 			</div>
 			<div class='content'>
 				<div class='page-content profile' id='profile'>
@@ -146,6 +150,20 @@
 							<img class='cityImg' />
 						</div>
 						<div class='errors'></div>
+					</div>
+				</div>
+				<div class='page-content profile' id='slider'>
+					<div class='my-slider'>
+						<div class='button'>
+							<input type='button' class='left' value='Left' />
+						</div>
+						<div class='image-block'>
+							<span class='counter'><span class='current'>7</span>/<span class='max'>20</span></span>
+							<img class='visible-image' />
+						</div>
+						<div class='button'>
+							<input type='button' class='right' value='Right' />
+						</div>
 					</div>
 				</div>
 				<div class='page-content' id='table'>
