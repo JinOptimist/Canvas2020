@@ -1,4 +1,4 @@
-var sliderModule = (function (){
+function createSliderModule(){
 	var arrayImgSrc = [];
 	var currentImgIndex = 0;
 	var mainBlock;
@@ -21,9 +21,9 @@ var sliderModule = (function (){
 			currentImgIndex -= arrayImgSrc.length;
 		}
 		var url = arrayImgSrc[currentImgIndex];
-		$('.visible-image').attr('src', url);
-		$('.current').text(currentImgIndex + 1);
-		$('.max').text(arrayImgSrc.length);
+		mainBlock.find('.visible-image').attr('src', url);
+		mainBlock.find('.current').text(currentImgIndex + 1);
+		mainBlock.find('.max').text(arrayImgSrc.length);
 	}
 
 	function createButton(className, value){
@@ -60,15 +60,13 @@ var sliderModule = (function (){
 		//mainBlock = document.querySelector(selector);
 		mainBlock = $(selector);
 		createHtml();
-		$('.my-slider .right').click(right);
-		$('.my-slider .left').click(left);
+		mainBlock.find('.my-slider .right').click(right);
+		mainBlock.find('.my-slider .left').click(left);
 		arrayImgSrc = urls;
 		updateImage();
-		
-		
 	}
 	
 	return {
 		start: init
 	};
-})();
+};
