@@ -1,0 +1,25 @@
+.page{
+	display: none;
+}
+
+.page.setting{
+	display: block;
+}
+
+.buttons{
+	width: 150px;
+	border: 1px red solid;
+	
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-menu{
+	display: flex;
+}
+
+.custom-diff{
+	display: none;
+}

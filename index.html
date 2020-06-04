@@ -1,5 +1,7 @@
 <html>
 	<head>
+		<link rel="stylesheet" href="style.css">
+	
 		<script src='js/jquery-3.5.0.min.js'></script>
 		
 		<script src='js/smile.js'></script>
@@ -11,30 +13,62 @@
 		<!-- <script src='js/tip3.js'></script> -->
 	</head>
 	<body>
-	
-		<div>
-			<input placeholder='Введи Х'/>
-			<input placeholder='Введи Y'/>
-			<input type='button' id='setX' value='Поставить Х' />
+		<div class='page setting'>
+			<input type='hidden' class='diff-type' value='0' />
+			<div>
+				This is a game. Labyrinth
+			</div>
+			<div>
+				Toggle difficulty chose <a href='#' class='switch-diff-type'>directly</a>
+			</div>
+			<div class='diff-type-block'>
+				Choose game difficulty: 
+				<label>
+					Easy <input type='radio' name='diff' value='0' data-width='3' data-height='3' />
+				</label>
+				<label>
+					Normal <input type='radio' name='diff' value='1' checked='checked' data-width='5' data-height='5' />
+				</label>
+				<label>
+					Hard <input type='radio' name='diff' value='2' data-width='10' data-height='10' />
+				</label>
+			</div>
+			<div class='diff-type-block custom-diff'>
+				<div>
+					Maze width: <input class='width' type='number' value='10' min='2' />
+				</div>
+				<div>
+					Maze height: <input class='height' type='number' value='10' min='2' />
+				</div>
+			</div>
+			<div>
+				<input class='start' type='button' value='start game' />
+			</div>
 		</div>
-		
-		<div>
-			<input placeholder='Введи Х'/>
-			<input placeholder='Введи Y'/>
-			<input type='button' id='setO' value='Поставить О' />
+		<div class='page game'>
+			<div class='game-menu'>
+				<div class='buttons'>
+					<div>
+						<input type='button' value='Вверх' class='doStep' id='up' data-direction='0' />
+					</div>
+					<div>
+						<input type='button' value='Влево' class='doStep' data-direction='3' />
+						<input type='button' value='Вправо' class='doStep' data-direction='1' />
+					</div>
+					<div>
+						<input type='button' value='Вниз' class='doStep' data-direction='2' />
+					</div>
+				</div>
+				<div>
+					Money <span class='money'>0</span>
+					<input class='end' type='button' value='end game' />
+				</div>
+			</div>
+			<canvas id="blockForDraw"></canvas>
 		</div>
-		
-		<div>
-			<input type='button' value='Вверх' class='doStep' id='up' data-direction='0' />
+		<div class='page end-game'>
+			Congtz. Your are finish level! At the end you got <span class='money'>0</span> coins.
+			<input type='button' class='nextLvl' value='Go to the next level' />
 		</div>
-		<div>
-			<input type='button' value='Влево' class='doStep' data-direction='3' />
-			<input type='button' value='Вправо' class='doStep' data-direction='1' />
-		</div>
-		<div>
-			<input type='button' value='Вниз' class='doStep' data-direction='2' />
-		</div>
-	
-		<canvas id="blockForDraw"></canvas>
 	</body>
 </html>

@@ -11,30 +11,78 @@ $(document).ready(function(){
 	});
 	
 	function stepToDir(dir){
-		Labyrinth.heroStep(dir);
-		var rows = Labyrinth.getRows();
-		drawLab(rows);
+		var isWin = Labyrinth.heroStep(dir);
+		if (isWin){
+			$('.page').hide();
+			$('.end-game').show();
+		}else{
+			drawLab();
+		}
 	}
 	
 	$(document).keydown(function(e) {
-		//left
-		if (e.keyCode == 37) {
-			stepToDir(3);
+		if (e.keyCode >= 37 && e.keyCode <= 40){
+			//left
+			if (e.keyCode == 37) {
+				stepToDir(3);
+			}
+			//up
+			if (e.keyCode == 38) {
+				stepToDir(0);
+			}
+			//right
+			if (e.keyCode == 39) {
+				stepToDir(1);
+			}
+			//down
+			if (e.keyCode == 40) {
+				stepToDir(2);
+			}
+			e.preventDefault();
 		}
-		//up
-		if (e.keyCode == 38) {
-			stepToDir(0);
-		}
-		//right
-		if (e.keyCode == 39) {
-			stepToDir(1);
-		}
-		//down
-		if (e.keyCode == 40) {
-			stepToDir(2);
+	});
+	
+	$('.switch-diff-type').click(function(){
+		var old = $('.diff-type').val() - 0;
+		$('.diff-type').val(++old % 2);
+		$('.diff-type-block').toggle();
+	});
+	
+	$('.start').click(function (){
+		var width;
+		var height;
+		var diffType = $('.diff-type').val();
+		if (diffType == 0){
+			var diffOption = $('[name=diff]:checked');
+			width = diffOption.data('width');
+			height = diffOption.data('height');
+		}else{
+			width = $('.width').val() - 0;
+			height = $('.height').val() - 0;	
 		}
 		
-		e.preventDefault();
+		Labyrinth.setSize(height, width);
+		
+		Labyrinth.generate();
+		drawLab();
+		
+		$('.page').hide();
+		$('.game').show();
+	});
+	
+	$('.end').click(function (){
+		$('.page').hide();
+		$('.setting').show();
+	});
+	
+	$('.nextLvl').click(function(){
+		var w = Labyrinth.getWidth();
+		var h = Labyrinth.getHeight();
+		Labyrinth.setSize(h + 1, w + 1);
+		Labyrinth.generate();
+		drawLab();
+		$('.page').hide();
+		$('.game').show();
 	});
 	
 	function init(){
@@ -42,15 +90,10 @@ $(document).ready(function(){
 		canvas.width = 3000;
 		canvas.height = 3000;
 		ctx = canvas.getContext("2d");
-
-		Labyrinth.setSize(10, 20);
-		Labyrinth.generate();
-		var rows = Labyrinth.getRows();
-
-		drawLab(rows);
 	}
 	
-	function drawLab(rows){
+	function drawLab(){
+		var rows = Labyrinth.getRows();
 		ctx.clearRect(0, 0, 3000, 3000);
 		for (var i = 0; i < rows.length; i++){
 			//i хранит в себе номер колонки
@@ -73,6 +116,9 @@ $(document).ready(function(){
 				}
 			}
 		}
+	
+		var money = Labyrinth.getHeroMoney();
+		$('.money').text(money);
 	}
 });
 

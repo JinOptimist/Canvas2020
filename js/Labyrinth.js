@@ -4,12 +4,20 @@ var Labyrinth = (function (){
 	var rows = [];
 	var heroX = 0;
 	var heroY = 0;
+	var money = 0;
+	
+	var exitX = 0;
+	var exitY = 0;
 	
 	var width = 3;
 	var height = 3;
 	
+	var coinChance = 0.1;
+	
 	var ground = "#060";
 	var wall = '#000';
+	var coin = '#ff3';
+	var exit = '#009';
 	//var gamer = "red";
 	var gamer = smile;
 	
@@ -61,6 +69,32 @@ var Labyrinth = (function (){
 			heroX = coor.x;
 			heroY = coor.y;
 		}while(filterGoodWall(wallToBreak).length > 0);
+		
+		generateCoins();
+		
+		generateExit();
+		
+		heroX = 0;
+		heroY = 0;
+	}
+	
+	function generateCoins(){
+		for(var y = 0; y < height; y++){
+			var line = rows[y];
+			for(var x = 0; x < width; x++){
+				var cell = line[x];
+				if (cell == ground 
+					&& Math.random() < coinChance){
+					rows[y][x] = coin;
+				}
+			}
+		}
+	}
+	
+	function generateExit(){
+		exitY = Math.floor(Math.random() * rows.length);
+		exitX = Math.floor(Math.random() * rows[exitY].length);
+		rows[exitY][exitX] = exit;
 	}
 	
 	function getRandomElem(items){
@@ -102,15 +136,15 @@ var Labyrinth = (function (){
 	}
 	
 	function filterGoodWall(wallToBreak){
-		//return wallToBreak.filter(coor => rows[coor.y][coor.x] == wall);
-		return wallToBreak.filter(function (elem){
+		return wallToBreak.filter(function (elem, index){
 			var near = [];
 			addNearCell(near, elem.x, elem.y);
-			var start = near.length;
-			var end = filterOnleWall(near).length;
+			var countOfCells = near.length;
+			var countOfWalls = filterOnleWall(near).length;
 			
 			return rows[elem.y][elem.x] == wall
-				&& start - end < 2;
+				&& (countOfCells - countOfWalls < 2
+					|| index % 5 == 0);
 		});
 	}
 	
@@ -151,6 +185,15 @@ var Labyrinth = (function (){
 			heroY = heroYPossible;
 		}
 		
+		if (rows[heroY][heroX] == coin){
+			money++;
+			rows[heroY][heroX] = ground;
+		}
+		
+		if (heroX == exitX && heroY == exitY){
+			return true;
+		}
+		return false;
 	}
 	
 	function setSize(newHeight, newWidth){
@@ -173,6 +216,7 @@ var Labyrinth = (function (){
 		getRows: getRows,
 		setSize: setSize,
 		heroStep: heroStep,
+		getHeroMoney: function (){ return money; }
 	};
 })();
 
