@@ -131,12 +131,18 @@ td{
 	border: 1px red solid;
 }
 
-tr:nth-child(2n + 3) td{
+tr:nth-child(2n) td{
 	background: #CCC;
 }
 
-tr:nth-child(2n + 4) td{
+tr:nth-child(2n + 1) td{
 	background: #0CC;
+}
+
+tr:nth-child(1) td{
+	background: pink;
+	font-weight: 800;
+	color: #000;
 }
 
 
