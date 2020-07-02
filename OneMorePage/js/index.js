@@ -1,7 +1,49 @@
 $(document).ready(function (){
+	var music = [
+		'music/Time in a Bottle.mp3', 
+		'music/yesterday.mp3', 
+		'music/ooh-la-la-in-l-a.mp3'];
+	var musicIndex = 0;
+	
+	var records = [];
+	var settings = {};
+	
 	var typeNumber = 1;
 	var typeEnum = 2;
 	var typeCalc = 3;
+	
+	var mans = ['Vasia', 'Petr', 'Mish'];
+	var womans = ['Kate', 'Olia', 'Masha'];
+	
+	var manConst = 'Man';
+
+	$('#play').click(function(){
+		play();
+	});
+	$('#stop').click(function(){
+		$('#player')[0].pause();
+	});
+	
+	$('#next').click(function(){
+		musicIndex++;
+		if (musicIndex >= music.length){
+			musicIndex = 0;
+		}	
+		play();
+	});
+	
+	$('#prev').click(function(){
+		musicIndex--;
+		if (musicIndex <= -1){
+			musicIndex = music.length - 1;
+		}	
+		play();
+	});
+	
+	function play(){
+		$('#player').attr('src', music[musicIndex]);
+		$('#player')[0].play();
+	}
 	
 	init();
 	
@@ -21,12 +63,17 @@ $(document).ready(function (){
 			'img/girl4.jpg'
 		]);
 	
-		var settings = {
+		settings = {
 			selector: 'table',
-			rowCount: 5,
+			rowCount: 20,
 			fields: [
-				generateEnumFieldObj("Name", ['Kate', 'Pol', 'Jane']),
-				generateEnumFieldObj("Sex", ['Man', 'Woman']),
+				generateEnumFieldObj("Sex", [manConst, 'Woman']),
+				generateCalcFieldObj("Name", function (record){
+					if (record.Sex == manConst){
+						return getRandomFromArray(mans);
+					}
+					return getRandomFromArray(womans);
+				}),
 				generateNumberFieldObj("Age", 15, 35),
 				generateNumberFieldObj("Money", 0, 1000),
 				generateNumberFieldObj("Height", 150, 200),
@@ -95,10 +142,6 @@ $(document).ready(function (){
 	
 	$('.close').click(function (){
 		$('.popup').hide();
-	});
-	
-	$('.adv').hover(function (){
-		$('.header').text('Smile');
 	});
 	
 	$('.left .button').click(function (){
@@ -220,7 +263,13 @@ $(document).ready(function (){
 		
 		generateTableHeader(settings);
 		
-		var records = generateTableBody(settings);
+		records = generateRecords(settings);
+		
+		records = records.sort(function (a, b){
+			return a.Age - b.Age;
+		});		
+
+		generateTableBody(settings, records);
 		
 		generateTableTotal(settings, records);
 	}
@@ -241,40 +290,78 @@ $(document).ready(function (){
 		for(var i = 0; i < settings.fields.length; i++){
 			var field = settings.fields[i];
 			var cell = generateCellWithFixValue(field.name);
+			cell.addClass('sort');
+			$(cell).click(sortTable);
 			rowHeader.append(cell);
 		}
 		table.append(rowHeader);
 	}
-
-	function generateTableBody(settings){
+	
+	function sortTable(){
+		var columnName = $(this).text();
+		var direction = $(this).data('dir');
+		if (direction == undefined){
+			direction = 1;
+		}
+		$(this).data('dir', direction == 1 ? -1 : 1);
+		
 		var table = $(settings.selector);
+		
+		table.find('tr:not(:first-child)').remove();
+		
+		records = records.sort(function (a, b){
+			if (typeof(a[columnName]) == 'string'){
+				if(a[columnName] < b[columnName]) { return -1 * direction; }
+				if(a[columnName] > b[columnName]) { return 1 * direction; }
+				return 0;
+			}
+			
+			return (a[columnName] - b[columnName]) * direction;
+		});		
+
+		generateTableBody(settings, records);
+	}
+	
+	function generateRecords(settings){
 		var records = [];
 		for(var i = 0; i < settings.rowCount; i++){
-			var row = $("<tr>");
-			
 			var record = {};
 
 			for(var k = 0; k < settings.fields.length; k++){
 				var field = settings.fields[k];
-				var cell;
+				var value;
 				switch(field.cellType){
 					case typeNumber:
-						cell = generateCellWithRandomNumber(field.min, field.max);
+						value = randomInteger(field.min, field.max);
 						break;
 					case typeEnum:
-						var val = getRandomFromArray(field.values);
-						cell = generateCellWithFixValue(val);
+						value = getRandomFromArray(field.values);
 						break;
 					case typeCalc:
-						var val = field.formula(record);
-						cell = generateCellWithFixValue(val);
+						value = field.formula(record);
 						break;
 				}
 				
-				row.append(cell);
-				record[field.name] = cell.text();
+				record[field.name] = value;
 			}
 			records.push(record);
+		}
+		
+		return records;
+	}
+
+	function generateTableBody(settings, records){
+		var table = $(settings.selector);
+		for(var i = 0; i < records.length; i++){
+			var row = $("<tr>");
+			
+			var record = records[i];
+			
+			for(var k = 0; k < settings.fields.length; k++){
+				var field = settings.fields[k];
+				var cell = generateCellWithFixValue(record[field.name]);
+				row.append(cell);
+			}
 			table.append(row);
 		}
 		

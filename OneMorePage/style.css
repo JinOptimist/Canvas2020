@@ -272,10 +272,15 @@ tr:last-child td{
 	border: 1px #000 solid;
 }
 
+.sort{
+	cursor: pointer;
+}
 
 
-
-
+.popup{
+	display: none;
+}
+	
 
 
 
