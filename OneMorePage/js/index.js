@@ -1,73 +1,30 @@
 $(document).ready(function (){
-	var music = [
-		'music/Time in a Bottle.mp3', 
-		'music/yesterday.mp3', 
-		'music/ooh-la-la-in-l-a.mp3'];
-	var musicIndex = 0;
-	
 	var records = [];
 	var settings = {};
 	
 	var typeNumber = 1;
 	var typeEnum = 2;
 	var typeCalc = 3;
+	var typeImage = 4;
 	
 	var mans = ['Vasia', 'Petr', 'Mish'];
 	var womans = ['Kate', 'Olia', 'Masha'];
 	
 	var manConst = 'Man';
-
-	$('#play').click(function(){
-		play();
-	});
-	$('#stop').click(function(){
-		$('#player')[0].pause();
-	});
+	var womanConst = 'Woman';
 	
-	$('#next').click(function(){
-		musicIndex++;
-		if (musicIndex >= music.length){
-			musicIndex = 0;
-		}	
-		play();
-	});
-	
-	$('#prev').click(function(){
-		musicIndex--;
-		if (musicIndex <= -1){
-			musicIndex = music.length - 1;
-		}	
-		play();
-	});
-	
-	function play(){
-		$('#player').attr('src', music[musicIndex]);
-		$('#player')[0].play();
-	}
+	var manConstUrl = 'img/male.png';
+	var womanConstUrl = 'img/female.jpg';
 	
 	init();
 	
 	function init(){
-		var sliderModule = createSliderModule();
-		sliderModule.start('.slider-my-cool', [
-			'img/girl6.jpg',
-			'img/girl7.jpg',
-			'img/girl8.png'
-		]);
-		
-		var sliderModule2 = createSliderModule();
-		sliderModule2.start('.slider-my-bad',[
-			'img/girl5.jpg',
-			'img/girl2.jpg',
-			'img/girl3.jpg',
-			'img/girl4.jpg'
-		]);
-	
 		settings = {
 			selector: 'table',
 			rowCount: 20,
 			fields: [
-				generateEnumFieldObj("Sex", [manConst, 'Woman']),
+				generateEnumFieldObj("Sex", [manConst, womanConst], true),
+				generateEnumFieldObj("SexImage", [manConstUrl, womanConstUrl], false, typeImage),
 				generateCalcFieldObj("Name", function (record){
 					if (record.Sex == manConst){
 						return getRandomFromArray(mans);
@@ -87,11 +44,12 @@ $(document).ready(function (){
 		generateTableCool(settings);
 	}
 	
-	function generateEnumFieldObj(name, values){
+	function generateEnumFieldObj(name, values, isHidden, customType){
 		return {
 			name: name,
-			cellType: typeEnum,
-			values: values
+			cellType: customType ? customType : typeEnum,
+			values: values,
+			isHidden: isHidden,
 		};
 	}
 	
@@ -160,6 +118,8 @@ $(document).ready(function (){
 		copy.find('.image img').attr('src', url);
 		
 		$('.gallery').append(copy);
+		
+		$('#nameNewGirl').val('');
 	});
 	
 	function removeImageBlock(){
@@ -289,6 +249,9 @@ $(document).ready(function (){
 		var rowHeader = $("<tr>");
 		for(var i = 0; i < settings.fields.length; i++){
 			var field = settings.fields[i];
+			if (field.isHidden){
+				continue;
+			}
 			var cell = generateCellWithFixValue(field.name);
 			cell.addClass('sort');
 			$(cell).click(sortTable);
@@ -335,6 +298,7 @@ $(document).ready(function (){
 						value = randomInteger(field.min, field.max);
 						break;
 					case typeEnum:
+					case typeImage:
 						value = getRandomFromArray(field.values);
 						break;
 					case typeCalc:
@@ -359,8 +323,17 @@ $(document).ready(function (){
 			
 			for(var k = 0; k < settings.fields.length; k++){
 				var field = settings.fields[k];
-				var cell = generateCellWithFixValue(record[field.name]);
-				row.append(cell);
+				var cell;
+				if (field.isHidden){
+					continue;
+				}
+				if (field.cellType == typeImage){
+					cell = generateCellWithImage(record[field.name]);
+				}else{
+					cell = generateCellWithFixValue(record[field.name]);
+				}
+				row.append(cell);	
+				
 			}
 			table.append(row);
 		}
@@ -498,6 +471,17 @@ $(document).ready(function (){
 	function generateCellWithFixValue(value){
 		var cell = $("<td>");
 		cell.text(value);
+		return cell;
+	}
+	
+	function generateCellWithImage(imageUrl){
+		var cell = $("<td>");
+		var div = $('<div>');
+		div.addClass('table-image-cell');
+		var img = $('<img>')
+		img.attr('src', imageUrl);
+		div.append(img);
+		cell.append(div);
 		return cell;
 	}
 	
